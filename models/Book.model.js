@@ -5,10 +5,10 @@ var BookSchema = new Schema({
     title: String,
     summary: String,
     isbn: String,
-    author_id: { 
-        type: mongoose.Schema.Types.ObjectId, 
+    authors: [{ 
+        type: Schema.Types.ObjectId, 
         ref: 'Author'
-    },
+    }],
     created: { 
         type: Date,
         default: Date.now

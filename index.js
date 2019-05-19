@@ -20,7 +20,7 @@ app.use((req,res,next) => {
 router.use(bookRoute);
 router.use(authorRoute);
 
-mongoose.connect('mongodb://localhost:27017/mitter-db', {useNewUrlParser: true})
+mongoose.connect('mongodb://localhost:27017/mitter-db', { useNewUrlParser: true, useFindAndModify: false})
         .then(res => console.log("Connected to MongoDB!"))
         .catch(err => console.log("Could not connect to MongoDB"));
 

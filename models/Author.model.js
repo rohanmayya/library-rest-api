@@ -8,6 +8,10 @@ var AuthorSchema = new Schema({
     name: String,
     profilePicture: Buffer,
     twitter: String,
+    books: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Book'
+    }],
     created: { 
         type: Date,
         default: Date.now

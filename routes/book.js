@@ -1,14 +1,22 @@
 let express = require('express');
+let extend = require('lodash/extend');
 let router = express.Router();
 
 let Book = require('../models/Book.model');
+let Author = require('../models/Author.model');
 
 router.post('/books', (req,res) => {
-    var { title, summary, isbn, author_id } = req.body;
-    var book = new Book({ title, summary, isbn, author_id }); 
+    var { title, summary, isbn, authors } = req.body;
+    var book = new Book({ title, summary, isbn, authors }); 
 
-    book.save((err) => {
+    book.save((err, book) => {
         if(err) res.send(err);
+        id = book._id;
+        for(i=0;i<book.authors.length;i++) {
+            Author.findByIdAndUpdate(book.authors[i], { $push: { books: id }}, (err) => {
+                if(err) res.send(err);
+            }); 
+        }
         res.json({ message: `Book with title ${title} successfully created!`});
     });
 });
@@ -33,7 +41,7 @@ router.put('/books/:book_id', (req,res) => {
     Book.findById(book_id, (err, book) => {
         if(err) res.send(err);
 
-        book.name = req.body.name;
+        book = extend(book, req.body); 
 
         book.save((err) => {
             if(err) res.send(err);
@@ -49,7 +57,11 @@ router.delete('/books/:book_id', (req,res) => {
         _id: book_id
     }, (err, book) => {
         if(err) res.send(err);
-        res.json({ message: 'Successfully deleted book' });
+    });
+    Author.updateMany({}, { $pull: { books: book_id }}, (err) => {
+        if(err) res.send(err);
+
+        res.json({ message: "Successfully deleted book" });
     });
 });
 
