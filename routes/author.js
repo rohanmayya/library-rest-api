@@ -15,7 +15,7 @@ router.post('/authors', (req,res) => {
 });
 
 router.get('/authors', (req,res) => {
-    Author.find((err, authors) => {
+    Author.find().populate('books').exec((err, authors) => {
         if(err) res.send(err);
         res.send(authors);
     });

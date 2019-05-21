@@ -22,7 +22,7 @@ router.post('/books', (req,res) => {
 });
 
 router.get('/books', (req,res) => {
-    Book.find((err, books) => {
+    Book.find().populate('authors').exec((err, books) => {
         if(err) res.send(err);
         res.send(books);
     });
