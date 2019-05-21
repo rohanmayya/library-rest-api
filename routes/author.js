@@ -50,7 +50,7 @@ router.delete('/authors/:author_id', (req,res) => {
         _id: author_id
     }, (err, author) => {
         if(err) res.send(err);
-        res.json({ message: 'Successfully deleted book' });
+        res.json({ message: 'Successfully deleted author' });
     });
 });
 
