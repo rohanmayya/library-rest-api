@@ -23,7 +23,4 @@ I have decided to model **Authors** and **Books** as an M:N relationship, and th
 All routes are generic GET, POST, PUT and DELETE that don't sway from their intended functionality.
 All endpoints have been tested using **Postman**.
 
-#### Shortcomings
-
-* Server-side validation pending.
 
