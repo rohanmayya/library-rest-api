@@ -7,6 +7,9 @@ let Author = require('../models/Author.model');
 
 router.post('/books', (req,res) => {
     var { title, summary, isbn, authors } = req.body;
+    if(authors.length === 0) {
+        return res.send( { errors: { 1: "code 470"} , message: "at least one author is required" })
+    }
     var book = new Book({ title, summary, isbn, authors }); 
 
     book.save((err, book) => {

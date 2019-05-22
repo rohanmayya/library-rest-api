@@ -10,7 +10,9 @@ router.post('/authors', (req,res) => {
 
     author.save((err) => {
         if(err) res.send(err);
-        res.json({ message: `Author successfully created!`});
+        else {
+            res.json({ message: `Author successfully created!`});
+        }
     });
 });
 

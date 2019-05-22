@@ -13,6 +13,10 @@ var BookSchema = new Schema({
         required: true,
         min: [20, 'Too short']
     },
+    authors: [{ 
+        type: Schema.Types.ObjectId, 
+        ref: 'Author',
+    }],
     isbn: {
         type: String,
         required: true,
@@ -23,10 +27,6 @@ var BookSchema = new Schema({
             message: props => `${props.value} is not a valid ISBN`
         },
     },
-    authors: [{ 
-        type: Schema.Types.ObjectId, 
-        ref: 'Author'
-    }],
     created: { 
         type: Date,
         default: Date.now
