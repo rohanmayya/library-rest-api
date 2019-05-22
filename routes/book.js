@@ -5,19 +5,21 @@ let router = express.Router();
 let Book = require('../models/Book.model');
 let Author = require('../models/Author.model');
 
-router.post('/books', (req,res) => {
+router.post('/books', async (req,res) => {
     var { title, summary, isbn, authors } = req.body;
     var book = new Book({ title, summary, isbn, authors }); 
 
-    book.save((err, book) => {
+    await book.save((err, book) => {
         if(err) res.send(err);
-        id = book._id;
-        for(i=0;i<book.authors.length;i++) {
-            Author.findByIdAndUpdate(book.authors[i], { $push: { books: id }}, (err) => {
-                if(err) res.send(err);
-            }); 
+            else {
+            id = book._id;
+            for(i=0;i<book.authors.length;i++) {
+                Author.findByIdAndUpdate(book.authors[i], { $push: { books: id }}, (err) => {
+                    if(err) res.send(err);
+                }); 
+            }
+            res.json({ message: `Book with title ${title} successfully created!`});
         }
-        res.json({ message: `Book with title ${title} successfully created!`});
     });
 });
 

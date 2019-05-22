@@ -5,9 +5,15 @@ let Schema = mongoose.Schema;
 // https://api.adorable.io/avatars/285/abott@adorable.png
 
 var AuthorSchema = new Schema({
-    name: String,
+    name: {
+        type: String,
+        required: true
+    },
     profilePicture: Buffer,
-    twitter: String,
+    twitter: {
+        type: String,
+        required: true
+    },
     books: [{
         type: Schema.Types.ObjectId,
         ref: 'Book'
